@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 function Singup() {
     return (<>
-<section className="vh-100 d-flex align-items-center bg-light">
-  <div className="container">
+
+  <div className="container mx-auto m-5">
     <div className="row justify-content-center">
       <div className="col-md-8 col-lg-6">
         <div className="card shadow-sm p-4">
@@ -48,7 +48,7 @@ function Singup() {
       </div>
     </div>
   </div>
-</section>
+
     </>  );
 }
 
