@@ -12,14 +12,7 @@
       "user_name": "abdelrahman",
       "email": "abdeee@gmail.com",
       "password": "000",
-      "logged_in": true
-    },
-    {
-      "id": "329d",
-      "user_name": "hagat",
-      "email": "hagar@gmail.com",
-      "password": "01121772515",
-      "logged_in": true
+      "logged_in":true
     }
   ]
 }
