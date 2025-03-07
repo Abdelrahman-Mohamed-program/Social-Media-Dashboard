@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let url;
+let url= "http://localhost:3000/users";
 
 //getting all users
 export async function get_users(){
@@ -10,6 +10,6 @@ export async function get_users(){
 
 
 //adding user to the end point
-export async function get_users(user){
-   await axios.post(url,user)
+export async function add_users(user){
+   return await axios.post(url,user)
 }

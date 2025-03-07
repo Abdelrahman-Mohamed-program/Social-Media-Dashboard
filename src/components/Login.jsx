@@ -1,6 +1,14 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 function Login() {
+
+
+    const input_ref=useRef();
+
+   useEffect(()=>{
+   input_ref.current.focus()
+   },[])
     return (<>
 
   <div className="container m-5 mx-auto">
@@ -19,11 +27,9 @@ function Login() {
 
     {/*log in Form*/}
           <form>
-  
-
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Email</label>
-              <input type="email" id="email" className="form-control" placeholder="Enter your email" />
+              <input type="email" ref={input_ref} id="email" className="form-control" placeholder="Enter your email" />
             </div>
 
             <div className="mb-3">
