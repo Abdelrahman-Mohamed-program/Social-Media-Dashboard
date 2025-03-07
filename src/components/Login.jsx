@@ -24,15 +24,13 @@ function Login() {
    
 
 
-    useEffect(()=>{//remove the effect of empty alert when typing again
+    useEffect(()=>{//remove the effect of empty  and wrong password alert when typing again
       if (user.password!=""||user.email!="") {
         set_check_empty(false)
       }
+      set_cofirm_password(false)
      },[user])
 
-     useEffect(()=>{//remove the effect of wrong password alert
-     set_cofirm_password(false)
-     },[user])
 
      useEffect(()=>{//remove the effect of email Not found alert
       set_check_email(true)

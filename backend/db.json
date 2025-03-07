@@ -5,14 +5,14 @@
       "user_name": "ahmed",
       "email": "abdo@gmail.com",
       "password": "011",
-      "logged_in": true
+      "logged_in": false
     },
     {
       "id": "7a0f",
       "user_name": "adfp",
       "email": "asadf@aesf",
       "password": "a",
-      "logged_in": true
+      "logged_in": false
     }
   ]
 }
