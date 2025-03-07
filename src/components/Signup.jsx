@@ -6,10 +6,10 @@ function Singup() {
 
   
  const[user,set_user]=useState({
-    "user_name":"",
-    "email": "",
-    "password": "",
-    "logged_in": false
+    user_name:"",
+    email: "",
+    password: "",
+    logged_in: false
   }
  )
  const [users,set_users]=useState([])
@@ -20,29 +20,33 @@ function Singup() {
  const input_ref=useRef();
 
 
- useEffect(()=>{
-  get_users().then(res=>set_users(res.data))
- },[])
-
  
- useEffect(()=>{
+
+ useEffect(()=>{//gets users from the end point and focuses on the first input when rendering
+  get_users().then(res=>set_users(res.data))
+  input_ref.current.focus()
+  },[])
+ 
+ useEffect(()=>{//remove the already regestered alert when typing the email again
   set_check_user(false)
  },[user.email])
 
- useEffect(()=>{
- input_ref.current.focus()
- },[])
-
- useEffect(()=>{
+ 
+ useEffect(()=>{//remove the effect of empty alert when typing again
   if (user.password!=""||confirmPassword!=""||user.email!=""||user.user_name!="") {
     set_check_empty(false)
   }
-  set_check_password(true)
  },[user,confirmPassword])
+
+
+
+ useEffect(()=>{//remove the effect of comfirmed password alert when typing password again
+  set_check_password(true)
+ },[user.password,confirmPassword])
+
 
  async function  sign_up(event){
   event.preventDefault()
- 
   if (user.password==""||confirmPassword==""||user.email===""||user.user_name=="") {
     set_check_empty(true)
   }else {
@@ -92,6 +96,7 @@ function Singup() {
               placeholder="Enter your email" />
                 {(check_user)&&<div className="alert alert-danger" role="alert">
                 this email is already Registered please  <Link to="/login" className="text-primary text-decoration-none fw-semibold"> Log in</Link>.
+                or use another email
               </div>}
             </div>
 
