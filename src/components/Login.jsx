@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { get_users } from "../../service/users.service";
+import { GetUsers } from "../../service/users.service";
 
 function Login() {
     const[user,set_user]=useState({
@@ -18,7 +18,7 @@ function Login() {
   
     
    useEffect(()=>{//getting users from the end point and focusing on first input
-    get_users().then(res=>set_users(res.data))
+    GetUsers().then(res=>set_users(res.data))
     input_ref.current.focus()
    },[])
    

@@ -1,65 +1,64 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { add_users, get_users } from "../../service/users.service";
+import { AddUser,GetUsers } from "../../service/users.service";
 
 function Singup() {
 
   
- const[user,set_user]=useState({
+ const[User,SetUser]=useState({
     user_name:"",
     email: "",
     password: "",
     logged_in: false
   }
  )
- const [users,set_users]=useState([])
- const [check_user,set_check_user]=useState(false)
- const[confirmPassword,set_cofirm_password]=useState("")
- const [check_passowrd,set_check_password]=useState(true)
- const [check_empty,set_check_empty]=useState(false)
- const input_ref=useRef();
+ const [Users,SetUsers]=useState([])
+ const [CheckUser,SetCheckUser]=useState(false)
+  const[ConfirmPassword,SetCofirmPassword]=useState("")
+ const [CheckPassword,SetCheckPassword]=useState(true)
+ const [CheckEmpty,SetCheckEmpty]=useState(false)
 
 
  
 
  useEffect(()=>{//gets users from the end point and focuses on the first input when rendering
-  get_users().then(res=>set_users(res.data))
-  input_ref.current.focus()
+  GetUsers().then(res=>SetUsers(res.data))
+  
   },[])
  
  useEffect(()=>{//remove the already regestered alert when typing the email again
-  set_check_user(false)
- },[user.email])
+  SetCheckUser(false)
+ },[User.email])
 
  
  useEffect(()=>{//remove the effect of empty alert when typing again
-  if (user.password!=""||confirmPassword!=""||user.email!=""||user.user_name!="") {
-    set_check_empty(false)
+  if (User.password!=""||ConfirmPassword!=""||User.email!=""||User.user_name!="") {
+    SetCheckEmpty(false)
   }
- },[user,confirmPassword])
+ },[User,ConfirmPassword])
 
 
 
  useEffect(()=>{//remove the effect of comfirmed password alert when typing password again
-  set_check_password(true)
- },[user.password,confirmPassword])
+  SetCheckPassword(true)
+ },[User.password,ConfirmPassword])
 
 
  async function  sign_up(event){
   event.preventDefault()
-  if (user.password==""||confirmPassword==""||user.email===""||user.user_name=="") {
-    set_check_empty(true)
+  if (User.password==""||ConfirmPassword==""||User.email===""||User.user_name=="") {
+    SetCheckEmpty(true)
   }else {
-    if ((user.password!=""&&confirmPassword=="")||(confirmPassword!=""&&user.password!==confirmPassword)) {
-      set_check_password(false)
+    if ((User.password!=""&&ConfirmPassword=="")||(ConfirmPassword!=""&&User.password!==ConfirmPassword)) {
+      SetCheckPassword(false)
     }else{
-     if (users.filter(u=>u.email===user.email).length==1){//check if user is aleardy in the data base
-        set_check_user(true)}
+     if (Users.filter(u=>u.email===User.email).length==1){//check if user is aleardy in the data base
+        SetCheckUser(true)}
      else{//will add user if first time signing up with email
-      const updatedUser = { ...user, logged_in: true };
-      set_user(updatedUser);
-      await add_users(updatedUser);
-      get_users().then(res=>set_users(res.data))
+      const updatedUser = { ...User, logged_in: true };
+      SetUser(updatedUser);
+      await AddUser(updatedUser);
+      GetUsers().then(res=>SetUsers(res.data))
      }
       }
   }
@@ -85,16 +84,15 @@ function Singup() {
           <form onSubmit={sign_up} >
             <div className="mb-3">
               <label htmlFor="username" className="form-label">Username</label>
-              <input type="text" id="username" className="form-control" onChange={e=>set_user({...user,user_name:e.target.value})} 
-              ref={input_ref} 
+              <input type="text" id="username" className="form-control" onChange={e=>SetUser({...User,user_name:e.target.value})} 
               placeholder="Enter your name" />
             </div>
 
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Email</label>
-              <input type="email" autoComplete="off" id="email" className="form-control" onChange={(e)=>{set_user({...user,email:e.target.value})}}
+              <input type="email" autoComplete="off" id="email" className="form-control" onChange={(e)=>{SetUser({...User,email:e.target.value})}}
               placeholder="Enter your email" />
-                {(check_user)&&<div className="alert alert-danger" role="alert">
+                {(CheckUser)&&<div className="alert alert-danger" role="alert">
                 this email is already Registered please  <Link to="/login" className="text-primary text-decoration-none fw-semibold"> Log in</Link>.
                 or use another email
               </div>}
@@ -102,19 +100,19 @@ function Singup() {
 
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Password</label>
-              <input type="password" id="password" className="form-control" onChange={e=>set_user({...user,password:e.target.value})}
+              <input type="password" id="password" className="form-control" onChange={e=>SetUser({...User,password:e.target.value})}
                placeholder="Enter your password" />
             </div>
 
             <div className="mb-5">
               <label htmlFor="confirmPassword" className="form-label">Repeat Password</label>
-              <input type="text" id="confirmPassword" className="form-control" onChange={e=>set_cofirm_password(e.target.value)} placeholder="Confirm your password" />
-              {(!check_passowrd)&&<div className="alert alert-danger" role="alert">
+              <input type="text" id="confirmPassword" className="form-control" onChange={e=>(SetCofirmPassword(e.target.value))} placeholder="Confirm your password" />
+              {(!CheckPassword)&&<div className="alert alert-danger" role="alert">
                 please re-enter the password correctly
               </div>}
             </div>
           
-              {(check_empty)&&<div className="alert alert-danger" role="alert">
+              {(CheckEmpty)&&<div className="alert alert-danger" role="alert">
                 please Fill all the fields before submit
               </div>}
             <div className="container d-flex justify-content-center">
