@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { get_users } from "../../service/users.service";
+import { GetUsers } from "../../service/users.service";
 
 function Login() {
   const [error, setError] = useState("")
