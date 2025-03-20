@@ -1,29 +1,31 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetUsers } from "../../service/users.service";
-
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 function Login() {
-  const [error, setError] = useState("")
   const [user, setUser] = useState({
     email: "",
     password: "",
   })
 
-  useEffect(() => {
-    if (user.email !== "" || user.password !== "") {
-      setError("")
-    }
-  }, [user])
+  
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (user.email === "" || user.password === "") {
-      setError("Please fill all the fields before submit")
-      return;
-    }
+      if (user.email == "" || user.password == "") {
+        withReactContent(Swal).fire({// gives a empty input alert
+                 icon: "error",
+                 title: "All inputs are required!",
+                 text: "Please fill all inputs",
+               })
+               return;
+       }
+    
+    
 
-    setError("Invalid email or password");
+    // setError("Invalid email or password");
     console.log(user);
   }
 
@@ -42,8 +44,10 @@ function Login() {
                 </p>
               </div>
 
+
               {/* log in Form */}
               <form onSubmit={handleLogin}>
+
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">Email</label>
                   <input
@@ -66,14 +70,8 @@ function Login() {
                   />
                 </div>
 
-                {/* Error message box */}
-                {error &&
-                  <div className="alert alert-danger" role="alert">
-                    {error}
-                  </div>
-                }
                 <div className="container d-flex justify-content-center">
-                  <button type="submit" className="btn btn-primary">submit</button>
+                  <button type="submit" className="btn btn-primary">Log in!</button>
                 </div>
               </form>
             </div>
