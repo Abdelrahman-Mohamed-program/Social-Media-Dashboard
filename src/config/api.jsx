@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useAuth } from "../provider/AuthProvider";
+import { useAuth } from "../services/AuthService";
 
 const useAxiosInstance = () => {
     const { token } = useAuth();
