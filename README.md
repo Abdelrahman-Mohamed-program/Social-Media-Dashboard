@@ -1,6 +1,6 @@
 # Social-Media-Dashboard
 
 ### Team Members [Team 6]:
-- Abdelrahman
+- Abdelrahman Mohamed
 - Ola Samir
 - Mostafa Ehab
