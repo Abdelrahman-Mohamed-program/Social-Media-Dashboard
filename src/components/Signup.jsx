@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//import { AddUser, GetUsers } from "../../service/users.service";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import useAxiosInstance from "../config/api";
@@ -9,7 +8,8 @@ import { useAuth } from "../services/AuthService";
 
 function Singup() {
   const  axios  = useAxiosInstance();
-  const { setToken } = useAuth();
+
+  //const { setToken } = useAuth(); will use if needed
 
   const [user, setUser] = useState({
     username: "",
@@ -19,9 +19,8 @@ function Singup() {
   }
   )
 
-
   const [confirmPassword, setCofirmPassword] = useState("")
-  const navigateToProfile=useNavigate();
+  const navigateToLogin=useNavigate();
 
 
   async function submit(event) {
@@ -49,7 +48,7 @@ function Singup() {
                 title: " Account created successfully! You can now log in.",
                 text: `Welcome To our Dashboard, ${data.username}`,
                })
-            navigateToProfile('/login')//navigate to logs in if response is true
+            navigateToLogin('/login')//navigate to logs in if response is true
           },err => {
             withReactContent(Swal).fire({
               icon: "error",

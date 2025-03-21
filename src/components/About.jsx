@@ -2,7 +2,7 @@ function About() {
     return (<>
         <div>
             <h1>
-                Ahmed
+                Header
             </h1>
             <p>Lorem ipsum </p>
         </div>

@@ -10,6 +10,7 @@ function Login() {
   const {setToken}=useAuth();
 
   const axios=useAxiosInstance();
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -29,8 +30,6 @@ function Login() {
                })
                return;
        }
-    
-       
        axios.post('/auth/login',user)//check user auth.
        .then(res=>res.data)
        .then(data=>{
@@ -48,10 +47,9 @@ function Login() {
       })
     )
 
-   
   }
 
-  
+
   return (
     <>
       <motion.div  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} 
