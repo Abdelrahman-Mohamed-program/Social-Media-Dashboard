@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import useAxiosInstance from "../config/api";
+import { motion } from "motion/react"
 import { useAuth } from "../services/AuthService";
 
 function Singup() {
@@ -60,7 +61,12 @@ function Singup() {
 
 
   return (<>
-    <div className="container mx-auto m-5">
+    <motion.div className="container mx-auto m-5" initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} 
+          transition={{
+                duration: 0.4,
+                scale: { type: "spring", visualDuration: 0.5 ,bounce: 0.4 },
+            }} 
+    >
       <div className="row justify-content-center">
         <div className="col-md-8 col-lg-6">
           <div className="card shadow-sm p-4">
@@ -78,36 +84,36 @@ function Singup() {
             <form onSubmit={submit} >
               <div className="mb-3">
                 <label htmlFor="username" className="form-label">Username</label>
-                <input type="text" id="username" className="form-control" onChange={e => setUser({ ...user, username: e.target.value })}
+                <motion.input  whileFocus={{ scale: 1.04}} whileHover={{ scale: 1.04 }} type="text" id="username" className="form-control" onChange={e => setUser({ ...user, username: e.target.value })}
                   placeholder="Enter your name" />
               </div>
 
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email</label>
-                <input type="email" autoComplete="off" id="email" className="form-control" onChange={(e) => { setUser({ ...user, email: e.target.value }) }}
+                <motion.input  whileFocus={{ scale: 1.04}} whileHover={{ scale: 1.04 }} type="email" autoComplete="off" id="email" className="form-control" onChange={(e) => { setUser({ ...user, email: e.target.value }) }}
                   placeholder="Enter your email" />
               </div>
 
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">Password</label>
-                <input type="password" id="password" className="form-control" onChange={e => setUser({ ...user, password: e.target.value })}
+                <motion.input  whileFocus={{ scale: 1.04}} whileHover={{ scale: 1.04 }} type="password" id="password" className="form-control" onChange={e => setUser({ ...user, password: e.target.value })}
                   placeholder="Enter your password" />
               </div>
 
               <div className="mb-5">
                 <label htmlFor="confirmPassword" className="form-label">Repeat Password</label>
-                <input type="text" id="confirmPassword" className="form-control" onChange={e => (setCofirmPassword(e.target.value))} placeholder="Confirm your password" />
+                <motion.input  whileFocus={{ scale: 1.04}} whileHover={{ scale: 1.04 }} type="text" id="confirmPassword" className="form-control" onChange={e => (setCofirmPassword(e.target.value))} placeholder="Confirm your password" />
               </div>
 
               <div className="container d-flex justify-content-center">
-                <button type="submit" className="btn btn-primary">Register</button>
+                <motion.button whileHover={{scale:1.1}} type="submit" className="btn btn-primary">Register</motion.button>
               </div>
             </form>
 
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
 
   </>);
 }

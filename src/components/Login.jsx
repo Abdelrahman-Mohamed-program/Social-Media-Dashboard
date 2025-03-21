@@ -4,6 +4,7 @@ import { useAuth } from "../services/AuthService";
 import useAxiosInstance from "../config/api";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { motion } from "motion/react"
 function Login() {
 
   const {setToken}=useAuth();
@@ -54,7 +55,13 @@ function Login() {
    */
   return (
     <>
-      <div className="container m-5 mx-auto">
+      <motion.div  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} 
+          transition={{
+                duration: 0.4,
+                scale: { type: "spring", visualDuration: 0.5 ,bounce: 0.4 },
+            }} //animations using motion libarary
+      
+      className="container m-5 mx-auto">
         <div className="row justify-content-center">
           <div className="col-md-8 col-lg-6">
             <div className="card shadow-sm p-4">
@@ -71,9 +78,10 @@ function Login() {
               {/* log in Form */}
               <form onSubmit={handleLogin}>
 
-                <div className="mb-3">
+                <div   className="mb-3">
                   <label htmlFor="email" className="form-label">Email</label>
-                  <input
+                  <motion.input
+                   whileFocus={{ scale: 1.04 }} whileHover={{ scale: 1.04 }}
                     type="email"
                     id="email"
                     onChange={e => setUser({ ...user, email: e.target.value })}
@@ -82,9 +90,10 @@ function Login() {
                   />
                 </div>
 
-                <div className="mb-3">
+                <div  className="mb-3">
                   <label htmlFor="password" className="form-label">Password</label>
-                  <input
+                  <motion.input
+                   whileFocus={{ scale: 1.04}} whileHover={{ scale: 1.04 }}
                     type="password"
                     id="password"
                     className="form-control"
@@ -94,13 +103,13 @@ function Login() {
                 </div>
 
                 <div className="container d-flex justify-content-center">
-                  <button type="submit" className="btn btn-primary">Log in!</button>
+                  <motion.button whileHover={{scale:1.1}} type="submit" className="btn btn-primary">Log in!</motion.button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
