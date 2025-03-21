@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //import { AddUser, GetUsers } from "../../service/users.service";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -7,73 +7,53 @@ import useAxiosInstance from "../config/api";
 import { useAuth } from "../services/AuthService";
 
 function Singup() {
-  const { axios } = useAxiosInstance();
+  const  axios  = useAxiosInstance();
   const { setToken } = useAuth();
 
   const [user, setUser] = useState({
-    userName: "",
+    username: "",
     email: "",
     password: "",
     loggedIn: false
   }
   )
 
+
   const [confirmPassword, setCofirmPassword] = useState("")
-
-
-
-
-
-  // useEffect(() => {//gets users from the end point and focuses on the first input when rendering
-  //   GetUsers().then(res => setUsers(res.data))
-
-  // }, [])
-
+  const navigateToProfile=useNavigate();
 
 
   async function submit(event) {
     event.preventDefault()
-    if (user.password === "" || confirmPassword === "" || user.email === "" || user.userName=== "") {
-  
+
+    if (user.password === "" || confirmPassword === "" || user.email === "" || user.username=== "") {
         withReactContent(Swal).fire({// gives a empty input alert (from sweet alert libr.)
           icon: "error",
           title: "All inputs are required!",
           text: "Please fill all inputs",
         })
-      
     } else {
       if ((user.password !== confirmPassword)) {//checks if the password is confirmed correctly
-
         withReactContent(Swal).fire({// gives a password not match alert 
           icon: "error",
           title: "Passwords do not match",
           text: "Oops! Your passwords don’t match. Double-check and try again",
         })
       } else {
-        // if (Users.filter(u => u.email === User.email).length == 1) {//check if user is aleardy in the data base
-        //   setCheckUser(true)
-        // }
-        // else {//will add user if first time signing up with email
-        //   // const updatedUser = { ...User, logged_in: true };
-        //   // setUser(updatedUser);
-        //   // await AddUser(updatedUser);
-        //   // GetUsers().then(res => setUsers(res.data))
-
-        // }
-
         axios.post("/auth/register", user)
           .then(res => res.data)
           .then(data => {
             console.log(data);
-          })
-          .catch(err => {
+            setToken(data.accessToken)
+            navigateToProfile('/')//logs in if response is true and go to the profile page
+          },err => {
             withReactContent(Swal).fire({// gives a password not match alert 
               icon: "error",
-              title: "ERRor in regester",
-              text: `Error type ${err}`,
+              title: "Error in register",
+              text: `${err}`,
             })
           })
-          
+         
       }
     } 
   }
@@ -98,7 +78,7 @@ function Singup() {
             <form onSubmit={submit} >
               <div className="mb-3">
                 <label htmlFor="username" className="form-label">Username</label>
-                <input type="text" id="username" className="form-control" onChange={e => setUser({ ...user, userName: e.target.value })}
+                <input type="text" id="username" className="form-control" onChange={e => setUser({ ...user, username: e.target.value })}
                   placeholder="Enter your name" />
               </div>
 

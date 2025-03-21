@@ -1,10 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../services/AuthService";
 
 function Navbar() {
     // const [token, setIsAuthenticated] = useState(false);
     const { token } = useAuth();
 
+    
+    function signOut(){
+        localStorage.removeItem("token")
+        Navigate('/')
+    }
     return (
         <>
             <nav className="navbar navbar-expand-lg text-light navbar-dark bg-dark">
@@ -28,13 +33,16 @@ function Navbar() {
                                 </li>
                             </ul>
                         </div> :
-                        <div>
+                        <div className="collapse navbar-collapse " id="navbarNav">
                             <ul className="navbar-nav d-flex w-100 justify-content-end ">
                                 <li className="nav-item text-light mx-2">
                                     <Link className="nav-link fs-5" to="/">Home</Link>
                                 </li>
                                 <li className="nav-item mx-2">
                                     <Link className="nav-link fs-5 " to="/profile">Profile</Link>
+                                </li>
+                                <li className="nav-item mx-2">
+                                    <Link onClick={signOut}  className="btn btn-danger fs-5 nav-link">Sign out!</Link>
                                 </li>
                             </ul>
                         </div>

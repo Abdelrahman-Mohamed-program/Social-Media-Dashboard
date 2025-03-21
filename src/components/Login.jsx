@@ -1,18 +1,24 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { GetUsers } from "../../service/users.service";
+import {  useState } from "react";
+import {  Link,  useNavigate } from "react-router-dom";
+import { useAuth } from "../services/AuthService";
+import useAxiosInstance from "../config/api";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 function Login() {
+
+  const {setToken}=useAuth();
+
+  const axios=useAxiosInstance();
   const [user, setUser] = useState({
     email: "",
     password: "",
   })
 
+  const navigateToProfile=useNavigate();
   
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = (event) => {
+    event.preventDefault();
 
       if (user.email == "" || user.password == "") {
         withReactContent(Swal).fire({// gives a empty input alert
@@ -23,12 +29,29 @@ function Login() {
                return;
        }
     
-    
+       
+       axios.post('/auth/login',user)//check user auth.
+       .then(res=>res.data)
+       .then(data=>{
+        console.log(data)
+        setToken(data.accessToken)
+        navigateToProfile('/')//logs in if response is true and go to the profile page
+       },err=> withReactContent(Swal).fire({//show error if response is false
+        icon: "error",
+        title: "Error",
+        text: `${err}`,
+      })
+    )
 
-    // setError("Invalid email or password");
-    console.log(user);
+   
   }
 
+  /** log in and sign up:-
+   
+   * add animation
+   
+   
+   */
   return (
     <>
       <div className="container m-5 mx-auto">
