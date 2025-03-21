@@ -1,2 +1,6 @@
 # Social-Media-Dashboard
- Main project
+
+### Team Members [Team 6]:
+- Abdelrahman
+- Ola Samir
+- Mostafa Ehab
