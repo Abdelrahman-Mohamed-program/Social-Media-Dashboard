@@ -34,25 +34,24 @@ function Login() {
        axios.post('/auth/login',user)//check user auth.
        .then(res=>res.data)
        .then(data=>{
-        console.log(data)
+          withReactContent(Swal).fire({
+                 icon:  "success",
+                 title: "Logged in succesfully!",
+                 text: `Welcome back ${data.username}`,
+                  })
         setToken(data.accessToken)
         navigateToProfile('/')//logs in if response is true and go to the profile page
        },err=> withReactContent(Swal).fire({//show error if response is false
         icon: "error",
         title: "Error",
-        text: `${err}`,
+        text: `Invalid email or password`,
       })
     )
 
    
   }
 
-  /** log in and sign up:-
-   
-   * add animation
-   
-   
-   */
+  
   return (
     <>
       <motion.div  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} 

@@ -44,11 +44,14 @@ function Singup() {
         axios.post("/auth/register", user)
           .then(res => res.data)
           .then(data => {
-            console.log(data);
-            setToken(data.accessToken)
-            navigateToProfile('/')//logs in if response is true and go to the profile page
+             withReactContent(Swal).fire({
+                icon:  "success",
+                title: " Account created successfully! You can now log in.",
+                text: `Welcome To our Dashboard, ${data.username}`,
+               })
+            navigateToProfile('/login')//navigate to logs in if response is true
           },err => {
-            withReactContent(Swal).fire({// gives a password not match alert 
+            withReactContent(Swal).fire({
               icon: "error",
               title: "Error in register",
               text: `${err}`,
