@@ -5,119 +5,165 @@ import withReactContent from 'sweetalert2-react-content'
 import useAxiosInstance from "../config/api";
 import { motion } from "motion/react"
 import { useAuth } from "../services/AuthService";
+import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 
 function Singup() {
-  const  axios  = useAxiosInstance();
-
-  //const { setToken } = useAuth(); will use if needed
+  const axios = useAxiosInstance();
+  const { setToken } = useAuth();
 
   const [user, setUser] = useState({
     username: "",
     email: "",
     password: "",
-    loggedIn: false
-  }
-  )
+    confirmPassword: ""
+  });
 
-  const [confirmPassword, setCofirmPassword] = useState("")
-  const navigateToLogin=useNavigate();
+  const navigateToLogin = useNavigate();
 
-
-  async function submit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
 
-    if (user.password === "" || confirmPassword === "" || user.email === "" || user.username=== "") {
-        withReactContent(Swal).fire({// gives a empty input alert (from sweet alert libr.)
-          icon: "error",
-          title: "All inputs are required!",
-          text: "Please fill all inputs",
-        })
-    } else {
-      if ((user.password !== confirmPassword)) {//checks if the password is confirmed correctly
-        withReactContent(Swal).fire({// gives a password not match alert 
-          icon: "error",
-          title: "Passwords do not match",
-          text: "Oops! Your passwords don’t match. Double-check and try again",
-        })
-      } else {
-        axios.post("/auth/register", user)
-          .then(res => res.data)
-          .then(data => {
-             withReactContent(Swal).fire({
-                icon:  "success",
-                title: " Account created successfully! You can now log in.",
-                text: `Welcome To our Dashboard, ${data.username}`,
-               })
-            navigateToLogin('/login')//navigate to logs in if response is true
-          },err => {
-            withReactContent(Swal).fire({
-              icon: "error",
-              title: "Error in register",
-              text: `${err}`,
-            })
-          })
-         
-      }
-    } 
+    if (user.password === "" || user.email === "" || user.username === "") {
+      withReactContent(Swal).fire({ // gives a empty input alert (from sweet alert libr.)
+        icon: "error",
+        title: "All inputs are required!",
+        text: "Please fill all inputs",
+      });
+      return;
+    }
+
+    if (user.password !== user.confirmPassword) { // Checks if the password is confirmed correctly
+      withReactContent(Swal).fire({ // gives a password not match alert 
+        icon: "error",
+        title: "Passwords do not match",
+        text: "Oops! Your passwords don't match. Double-check and try again",
+      });
+      return;
+    }
+
+    axios.post(
+      "/auth/register", user
+    ).then(
+      res => res.data
+    ).then(data => {
+      withReactContent(Swal).fire({
+        icon: "success",
+        title: " Account created successfully! You can now log in.",
+        text: `Welcome To our Dashboard, ${data.username}`,
+      });
+      setToken(data.accessToken)
+      navigateToLogin('/') // navigate to logs in if response is true
+    }).catch(err => {
+      withReactContent(Swal).fire({
+        icon: "error",
+        title: "Error in register",
+        text: `${err}`,
+      });
+    });
   }
 
+  return (
+    <>
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="card p-4 shadow-lg" style={{ width: "350px" }}>
+          <h2 className="text-center mb-4">Sign Up</h2>
 
-  return (<>
-    <motion.div className="container mx-auto m-5" initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} 
-          transition={{
-                duration: 0.4,
-                scale: { type: "spring", visualDuration: 0.5 ,bounce: 0.4 },
-            }} 
-    >
-      <div className="row justify-content-center">
-        <div className="col-md-8 col-lg-6">
-          <div className="card shadow-sm p-4">
-
-            {/* sign up page Header Section */}
-            <div className="text-center mb-2">
-              <h1 className="fs-3 fw-bold">Sign Up</h1>
-              <p className="fs-6 text-muted">
-                Already have an account?
-                <Link to="/login" className="text-primary text-decoration-none fw-semibold"> Log in</Link>.
-              </p>
+          <form onSubmit={handleSubmit}>
+            {/* Username Field */}
+            <div className="mb-3">
+              <label className="form-label">Username</label>
+              <div className="input-group">
+                <span className="input-group-text">
+                  <FaUser />
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your username"
+                  name="username"
+                  value={user.username}
+                  onChange={e => setUser({ ...user, username: e.target.value })}
+                  required
+                />
+              </div>
             </div>
 
-            {/*sign up Form*/}
-            <form onSubmit={submit} >
-              <div className="mb-3">
-                <label htmlFor="username" className="form-label">Username</label>
-                <motion.input  whileFocus={{ scale: 1.04}} whileHover={{ scale: 1.04 }} type="text" id="username" className="form-control" onChange={e => setUser({ ...user, username: e.target.value })}
-                  placeholder="Enter your name" />
+            {/* Email Field */}
+            <div className="mb-3">
+              <label className="form-label">Email</label>
+              <div className="input-group">
+                <span className="input-group-text">
+                  <FaEnvelope />
+                </span>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter your email"
+                  name="email"
+                  value={user.email}
+                  onChange={e => setUser({ ...user, email: e.target.value })}
+                  required
+                />
               </div>
+            </div>
 
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email</label>
-                <motion.input  whileFocus={{ scale: 1.04}} whileHover={{ scale: 1.04 }} type="email" autoComplete="off" id="email" className="form-control" onChange={(e) => { setUser({ ...user, email: e.target.value }) }}
-                  placeholder="Enter your email" />
+            {/* Password Field */}
+            <div className="mb-3">
+              <label className="form-label">Password</label>
+              <div className="input-group">
+                <span className="input-group-text">
+                  <FaLock />
+                </span>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter your password"
+                  name="password"
+                  value={user.password}
+                  onChange={e => setUser({ ...user, password: e.target.value })}
+                  required
+                />
               </div>
+            </div>
 
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">Password</label>
-                <motion.input  whileFocus={{ scale: 1.04}} whileHover={{ scale: 1.04 }} type="password" id="password" className="form-control" onChange={e => setUser({ ...user, password: e.target.value })}
-                  placeholder="Enter your password" />
+            {/* Confirm Password Field */}
+            <div className="mb-3">
+              <label className="form-label">Confirm Password</label>
+              <div className="input-group">
+                <span className="input-group-text">
+                  <FaLock />
+                </span>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Confirm your password"
+                  name="confirmPassword"
+                  value={user.confirmPassword}
+                  onChange={e => setUser({ ...user, confirmPassword: e.target.value })}
+                  required
+                />
               </div>
+            </div>
 
-              <div className="mb-5">
-                <label htmlFor="confirmPassword" className="form-label">Repeat Password</label>
-                <motion.input  whileFocus={{ scale: 1.04}} whileHover={{ scale: 1.04 }} type="text" id="confirmPassword" className="form-control" onChange={e => (setCofirmPassword(e.target.value))} placeholder="Confirm your password" />
-              </div>
+            {/* Submit Button */}
+            <button type="submit" className="btn btn-primary w-100">
+              Register
+            </button>
+          </form>
 
-              <div className="container d-flex justify-content-center">
-                <motion.button whileHover={{scale:1.1}} type="submit" className="btn btn-primary">Register</motion.button>
-              </div>
-            </form>
-
+          {/* Already have an account? */}
+          <div className="text-center mt-3">
+            <p>
+              Already have an account?{" "}
+              <Link to="/login" className="text-decoration-none">
+                Login
+              </Link>
+            </p>
           </div>
         </div>
       </div>
-    </motion.div>
-
-  </>);
+    </>
+  );
 }
 
 export default Singup;
