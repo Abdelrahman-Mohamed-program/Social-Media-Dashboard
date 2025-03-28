@@ -2,6 +2,7 @@ import { useAuth } from "../services/AuthService";
 import Contact from "./Contact";
 import About from "./About";
 import Welcome from "./Welcome";
+import Dashboard from "./Dashboard";
 
 function Home() {
   const { token } = useAuth();
@@ -14,9 +15,10 @@ function Home() {
           <Contact />
         </div>
         :
-        <div className="container text-center mt-4">
+        <div className="container mt-4">
+          <Dashboard />
 
-          <h1 className="fs-3 fw-bold">Welcome! Thank you For using our social media Dashboard!</h1>
+          {/* <h1 className="fs-3 fw-bold">Welcome! Thank you For using our social media Dashboard!</h1>
 
           <p className="fs-6 text-muted mt-2">
 
@@ -24,7 +26,7 @@ function Home() {
 
           <p className="fs-6 text-muted">
 
-          </p>
+          </p> */}
         </div>
       }
     </>
