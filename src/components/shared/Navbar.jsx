@@ -5,10 +5,6 @@ import { BsPersonCircle } from "react-icons/bs";
 function Navbar() {
     const { token } = useAuth();
 
-    function signOut() {
-        localStorage.removeItem("token")
-        Navigate('/')
-    }
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
@@ -31,9 +27,6 @@ function Navbar() {
                         </div> :
                         <div className="collapse navbar-collapse " id="navbarNav">
                             <ul className="navbar-nav d-flex w-100 justify-content-end ">
-                                <li className="nav-item mx-2 ">
-                                    <Link onClick={signOut} className="btn btn-primary fs-5">Sign out!</Link>
-                                </li>
                                 <li className="nav-item mx-2 ">
                                     <Link to="/profile" className="btn btn-primary fs-5">
                                         <BsPersonCircle size={30} />

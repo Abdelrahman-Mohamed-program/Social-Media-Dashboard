@@ -1,83 +1,140 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../services/AuthService";
 
-const Profile = () => {
-    const [userInfo, setUserInfo] = useState({
+function ProfilePage() {
+    const { token, setToken } = useAuth();
+    const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
         email: "",
         currentPassword: "",
         newPassword: "",
-        confirmNewPassword: "",
+        confirmPassword: "",
     });
 
     const handleChange = (e) => {
-        setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handlePersonalInfoSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Personal Info Updated:", userInfo);
+        console.log("Profile Updated:", formData);
     };
 
-    const handlePasswordChangeSubmit = (e) => {
-        e.preventDefault();
-        if (userInfo.newPassword !== userInfo.confirmNewPassword) {
-            alert("Passwords do not match!");
-            return;
-        }
-        console.log("Password Changed Successfully!");
+    const handleLogout = () => {
+        setToken("");
+        Navigate('/');
     };
 
     return (
-        <div className="container mt-4">
-            <h2 className="text-center mb-4">Profile Settings</h2>
-
-            {/* Personal Information Section */}
-            <div className="card mb-4">
-                <div className="card-header">Personal Information</div>
-                <div className="card-body">
-                    <form onSubmit={handlePersonalInfoSubmit}>
-                        <div className="mb-3">
-                            <label className="form-label">First Name</label>
-                            <input type="text" className="form-control" name="firstName" value={userInfo.firstName} onChange={handleChange} required />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Last Name</label>
-                            <input type="text" className="form-control" name="lastName" value={userInfo.lastName} onChange={handleChange} required />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Email Address</label>
-                            <input type="email" className="form-control" name="email" value={userInfo.email} onChange={handleChange} required />
-                        </div>
-                        <button type="submit" className="btn btn-primary">Save Changes</button>
-                    </form>
+        <div className="container-fluid">
+            <div className="row">
+                {/* Sidebar */}
+                <div className="col-4 col-lg-2">
                 </div>
-            </div>
 
-            {/* Security Information Section */}
-            <div className="card">
-                <div className="card-header">Security Information</div>
-                <div className="card-body">
-                    <form onSubmit={handlePasswordChangeSubmit}>
-                        <div className="mb-3">
-                            <label className="form-label">Current Password</label>
-                            <input type="password" className="form-control" name="currentPassword" value={userInfo.currentPassword} onChange={handleChange} required />
+                {/* Main Content */}
+                <div className="col-md-8 ms-sm-auto col-lg-10 px-md-4">
+                    <h2 className="mt-4">Profile</h2>
+
+                    {/* Personal Info */}
+                    <div className="card my-4">
+                        <div className="card-body">
+                            <h5 className="card-title">Personal Information</h5>
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <label className="form-label">First Name</label>
+                                    <input
+                                        type="text"
+                                        name="firstName"
+                                        className="form-control"
+                                        value={formData.firstName}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Last Name</label>
+                                    <input
+                                        type="text"
+                                        name="lastName"
+                                        className="form-control"
+                                        value={formData.lastName}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Email Address</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        className="form-control"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <button type="submit" className="btn btn-primary">
+                                    Save Changes
+                                </button>
+                            </form>
                         </div>
-                        <div className="mb-3">
-                            <label className="form-label">New Password</label>
-                            <input type="password" className="form-control" name="newPassword" value={userInfo.newPassword} onChange={handleChange} required />
+                    </div>
+
+                    {/* Password Change */}
+                    <div className="card my-4">
+                        <div className="card-body">
+                            <h5 className="card-title">Change Password</h5>
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <label className="form-label">Current Password</label>
+                                    <input
+                                        type="password"
+                                        name="currentPassword"
+                                        className="form-control"
+                                        value={formData.currentPassword}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">New Password</label>
+                                    <input
+                                        type="password"
+                                        name="newPassword"
+                                        className="form-control"
+                                        value={formData.newPassword}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Confirm Password</label>
+                                    <input
+                                        type="password"
+                                        name="confirmPassword"
+                                        className="form-control"
+                                        value={formData.confirmPassword}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <button type="submit" className="btn btn-danger">
+                                    Update Password
+                                </button>
+                            </form>
                         </div>
-                        <div className="mb-3">
-                            <label className="form-label">Confirm New Password</label>
-                            <input type="password" className="form-control" name="confirmNewPassword" value={userInfo.confirmNewPassword} onChange={handleChange} required />
+                    </div>
+
+                    {/* Logout */}
+                    <div className="card my-4">
+                        <div className="card-body">
+                            <h5 className="card-title">Logout</h5>
+                            <button onClick={handleLogout} className="btn btn-danger">
+                                Logout
+                            </button>
                         </div>
-                        <button type="submit" className="btn btn-danger">Change Password</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     );
-};
+}
 
-export default Profile;
+export default ProfilePage;
