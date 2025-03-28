@@ -21,19 +21,6 @@ body {
     justify-content: space-between;
 }
 
-/* Home intro Background */
-.bg-gradient-primary {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-}
-
-.text-blue {
-    color: #2a5298;
-}
-
-.btn-blue {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-}
-
 /* Smooth scroll padding */
 section {
     scroll-margin-top: 70px;
