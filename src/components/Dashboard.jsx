@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { formatNumber } from "../utils/numUtils";
+import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import useAxiosInstance from "../config/api";
 
