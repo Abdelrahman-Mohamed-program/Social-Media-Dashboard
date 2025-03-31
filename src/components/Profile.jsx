@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/AuthService";
 
 function ProfilePage() {
     const { token, setToken } = useAuth();
+    const { refreshToken, setRefreshToken } = useAuth();
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -24,7 +27,8 @@ function ProfilePage() {
 
     const handleLogout = () => {
         setToken("");
-        Navigate('/');
+        setRefreshToken("");
+        navigate('/');
     };
 
     return (
