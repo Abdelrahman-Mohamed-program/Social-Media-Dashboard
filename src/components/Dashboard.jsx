@@ -44,7 +44,7 @@ const Dashboard = () => {
 
     const fetchAnalytics = async () => {
         try {
-            const response = await axios.get(`/analytics?platform=${selectedPlatform.toLowerCase()}`);
+            const response = await axios.get(`/analytics/p/${selectedPlatform.id}`);
             const data = await response.data;
             setData(data);
         } catch (error) {
@@ -138,13 +138,13 @@ const Dashboard = () => {
                             {platforms && platforms.length > 0 ? platforms.map(platform => (
                                 <li
                                     key={platform.id}
-                                    className={`p-2 mb-2 rounded d-flex ${selectedPlatform === platform.name ? 'bg-primary text-white' : 'bg-light'}`}
-                                    onClick={() => handlePlatformChange(platform.name)}
+                                    className={`p-2 mb-2 rounded d-flex ${selectedPlatform.id === platform.id ? 'bg-primary text-white' : 'bg-light'}`}
+                                    onClick={() => handlePlatformChange(platform)}
                                     style={{ cursor: "pointer" }}
                                 >
                                     <img
                                         src={`${baseURL}${platform.icon}`}
-                                        alt={platform.description}
+                                        alt={platform.name}
                                         className="me-2"
                                         style={{ width: "20px", height: "20px" }}
                                     />

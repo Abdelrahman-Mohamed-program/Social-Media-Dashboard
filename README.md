@@ -7,28 +7,72 @@
 
 ---
 
-## Dashboard Analytics API Documentation
 
-### Base URL  
-- Not yet deployed
+## API Documentation
 
----
+### Authentication
 
-### **1. Get Analytics Data**
-#### **Endpoint:**  
-`GET /analytics`
+#### **Login**
+**Endpoint:** `POST /auth/login`
+- **Description:** Authenticate a user and return an access token.
+- **Request Body:**
+```json
+{
+  "email": "user@example.com",
+  "password": "yourpassword"
+}
+```
+- **Response:**
+```json
+{
+  "userId": "1",
+  "accessToken": "your_access_token",
+  "refreshToken": "your_refresh_token"
+}
+```
 
-#### **Description:**  
-Retrieves analytics data for the selected platform (Facebook, YouTube, TikTok, etc.), including metrics like likes, shares, comments, and chart data.
+#### **Register**
+**Endpoint:** `POST /auth/register`
+- **Description:** Register a new user.
+- **Request Body:**
+```json
+{
+  "username": "John Doe",
+  "email": "user@example.com",
+  "password": "yourpassword"
+}
+```
+- **Response:**
+```json
+{
+  "message": "User registered successfully"
+}
+```
 
-#### **Query Parameters:**  
-| Parameter  | Type   | Required | Description |
-|------------|--------|----------|-------------|
-| `platform` | string | Yes | Platform name (`facebook`, `youtube`, `tiktok`, etc.) |
-| `start_date` | string | No | Start date in `YYYY-MM-DD` format (default: 30 days ago) |
-| `end_date` | string | No | End date in `YYYY-MM-DD` format (default: today) |
+#### **Refresh Token**
+**Endpoint:** `POST /auth/refresh-token`
+- **Description:** Refresh the access token using the refresh token.
+- **Request Body:**
+```json
+{
+  "userId": "1",
+  "refreshToken": "your_refresh_token"
+}
+```
+- **Response:**
+```json
+{
+  "accessToken": "new_access_token",
+  "refreshToken": "new_refresh_token"
+}
+```
 
-#### **Response:**
+### Analytics
+
+#### **Get Analytics by Platform**
+**Endpoint:** `GET /analytics/p/:platformId`
+- **Description:** Retrieve analytics data for a specific platform.
+- **Response:**
 ```json
 {
   "platform": "facebook",
@@ -60,36 +104,10 @@ Retrieves analytics data for the selected platform (Facebook, YouTube, TikTok, e
 }
 ```
 
----
-
-### **2. Get Available Platforms**
-#### **Endpoint:**  
-`GET /platforms`
-
-#### **Description:**  
-Retrieves a list of supported platforms.
-
-#### **Response:**
-```json
-{
-  "platforms": ["facebook", "youtube", "tiktok", "twitter"]
-}
-```
-
----
-
-### **3. Get Date Range Stats**
-#### **Endpoint:**  
-`GET /analytics/stats`
-
-#### **Query Parameters:**  
-| Parameter  | Type   | Required | Description |
-|------------|--------|----------|-------------|
-| `platform` | string | Yes | Platform name (`facebook`, `youtube`, `tiktok`, etc.) |
-| `start_date` | string | Yes | Start date in `YYYY-MM-DD` format |
-| `end_date` | string | Yes | End date in `YYYY-MM-DD` format |
-
-#### **Response:**
+#### **Get Analytics Stats**
+**Endpoint:** `GET /analytics/stats/:platformId`
+- **Description:** Get summary statistics for a specific platform.
+- **Response:**
 ```json
 {
   "platform": "youtube",
@@ -99,4 +117,73 @@ Retrieves a list of supported platforms.
 }
 ```
 
+### Platforms
+
+#### **Get All Platforms**
+**Endpoint:** `GET /platforms/all`
+- **Description:** Retrieve a list of all available platforms.
+- **Response:**
+```json
+[
+  {
+    "id": "1",
+    "name": "Facebook",
+    "description": "Social media platform",
+    "icon": "facebook.png"
+  },
+  {
+    "id": "2",
+    "name": "YouTube",
+    "description": "Video sharing platform",
+    "icon": "youtube.png"
+  }
+]
+```
+
+#### **Get User's Platforms**
+**Endpoint:** `GET /platforms/me`
+- **Description:** Retrieve platforms registered by the authenticated user.
+- **Response:**
+```json
+[
+  {
+    "id": "1",
+    "name": "Facebook",
+    "description": "User's registered platform",
+    "icon": "facebook.png"
+  }
+]
+```
+
+#### **Add a Platform**
+**Endpoint:** `POST /platforms/add`
+- **Description:** Register a new platform.
+- **Request Body:**
+```json
+{
+  "platformId": "3"
+}
+```
+- **Response:**
+```json
+{
+  "message": "Platform added successfully",
+  "platform": {
+    "id": "3",
+    "name": "Twitter",
+    "description": "Microblogging platform",
+    "icon": "twitter.png"
+  }
+}
+```
+
+#### **Delete a Platform**
+**Endpoint:** `DELETE /platforms/delete/:platformId`
+- **Description:** Remove a registered platform.
+- **Response:**
+```json
+{
+  "message": "Platform deleted successfully"
+}
+```
 ---
