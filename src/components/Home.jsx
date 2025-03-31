@@ -3,32 +3,26 @@ import Contact from "./Contact";
 import About from "./About";
 import Welcome from "./Welcome";
 import Dashboard from "./Dashboard";
+import { useNavigate } from "react-router-dom";
+import { use, useEffect } from "react";
 
 function Home() {
   const { token } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [token, navigate]);
+
   return (
     <>
-      {!token ?
-        <div className="container mt-4">
-          <Welcome />
-          <About />
-          <Contact />
-        </div>
-        :
-        <div className="container mt-4">
-          <Dashboard />
-
-          {/* <h1 className="fs-3 fw-bold">Welcome! Thank you For using our social media Dashboard!</h1>
-
-          <p className="fs-6 text-muted mt-2">
-
-          </p>
-
-          <p className="fs-6 text-muted">
-
-          </p> */}
-        </div>
-      }
+      <div className="container mt-4">
+        <Welcome />
+        <About />
+        <Contact />
+      </div>
     </>
   );
 }

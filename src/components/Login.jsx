@@ -8,7 +8,7 @@ import { motion } from "motion/react"
 import { FaUser, FaLock } from "react-icons/fa";
 
 function Login() {
-  const { setToken } = useAuth();
+  const { setToken, setUserID, setRefreshToken } = useAuth();
   const axios = useAxiosInstance();
 
   const [user, setUser] = useState({
@@ -40,7 +40,10 @@ function Login() {
         title: "Logged in succesfully!",
         text: `Welcome back ${data.username}`,
       });
+      console.log(data)
       setToken(data.accessToken)
+      setUserID(data.userId)
+      setRefreshToken(data.refreshToken)
       navigateToProfile('/')
     }).catch(err => {
       withReactContent(Swal).fire({ //show error if response is false

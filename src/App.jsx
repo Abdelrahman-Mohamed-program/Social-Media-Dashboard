@@ -11,6 +11,8 @@ import Contact from "./components/Contact"
 import NotFound from "./components/error404/NotFound"
 import AuthProvider from "./services/AuthService"
 import { ProtectedRoute } from "./routes/ProtectedRoute"
+import Dashboard from "./components/Dashboard"
+import Platforms from "./components/Platforms"
 
 function App() {
     return (
@@ -24,6 +26,8 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/platforms" element={<Platforms />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>

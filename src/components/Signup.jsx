@@ -9,7 +9,7 @@ import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 
 function Singup() {
   const axios = useAxiosInstance();
-  const { setToken } = useAuth();
+  const { setToken, setUserID, setRefreshToken } = useAuth();
 
   const [user, setUser] = useState({
     username: "",
@@ -52,6 +52,8 @@ function Singup() {
         text: `Welcome To our Dashboard, ${data.username}`,
       });
       setToken(data.accessToken)
+      setUserID(data.userID)
+      setRefreshToken(data.refreshToken)
       navigateToLogin('/') // navigate to logs in if response is true
     }).catch(err => {
       withReactContent(Swal).fire({

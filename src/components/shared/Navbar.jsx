@@ -1,6 +1,7 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../services/AuthService";
 import { BsPersonCircle } from "react-icons/bs";
+import { FaPlus } from "react-icons/fa"; // Import the icon
 
 function Navbar() {
     const { token } = useAuth();
@@ -30,6 +31,11 @@ function Navbar() {
                                 <li className="nav-item mx-2 ">
                                     <Link to="/profile" className="btn btn-primary fs-5">
                                         <BsPersonCircle size={30} />
+                                    </Link>
+                                </li>
+                                <li className="nav-item mx-2">
+                                    <Link className="btn btn-primary fs-5" to="/platforms">
+                                        <FaPlus size={30} />
                                     </Link>
                                 </li>
                             </ul>

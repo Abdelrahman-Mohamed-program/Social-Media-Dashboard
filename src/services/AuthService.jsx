@@ -10,10 +10,13 @@ const AuthProvider = ({ children }) => {
     const [userID, setUserID_] = useState(localStorage.getItem("userID"));
 
     // Function to set the authentication token
-    const setToken = (newToken, userID) => {
+    const setToken = (newToken) => {
         setToken_(newToken);
-        setUserID_(userID);
     };
+
+    const setUserID = (newUserID) => {
+        setUserID_(newUserID);
+    }
 
     useEffect(() => {
         if (token) {
@@ -27,12 +30,13 @@ const AuthProvider = ({ children }) => {
             localStorage.removeItem('userID')
             localStorage.removeItem('refreshToken')
         }
-    }, [token]);
+    }, [token, userID, refreshToken]);
 
     // Memoized value of the authentication context
     const contextValue = useMemo(
         () => ({
             userID,
+            setUserID,
             token,
             setToken,
             refreshToken,
