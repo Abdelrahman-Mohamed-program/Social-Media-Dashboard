@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -18,7 +18,7 @@ function Singup() {
     confirmPassword: ""
   });
 
-  const navigateToLogin = useNavigate();
+  const navigateToProfile = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -48,13 +48,13 @@ function Singup() {
     ).then(data => {
       withReactContent(Swal).fire({
         icon: "success",
-        title: " Account created successfully! You can now log in.",
+        title: " Account created successfully!",
         text: `Welcome To our Dashboard, ${data.username}`,
       });
       setToken(data.accessToken)
       setUserID(data.userID)
       setRefreshToken(data.refreshToken)
-      navigateToLogin('/') // navigate to logs in if response is true
+    navigateToProfile('/')
     }).catch(err => {
       withReactContent(Swal).fire({
         icon: "error",
@@ -85,7 +85,7 @@ function Singup() {
                   name="username"
                   value={user.username}
                   onChange={e => setUser({ ...user, username: e.target.value })}
-                  required
+                
                 />
               </div>
             </div>
@@ -104,7 +104,7 @@ function Singup() {
                   name="email"
                   value={user.email}
                   onChange={e => setUser({ ...user, email: e.target.value })}
-                  required
+                 
                 />
               </div>
             </div>
@@ -123,7 +123,7 @@ function Singup() {
                   name="password"
                   value={user.password}
                   onChange={e => setUser({ ...user, password: e.target.value })}
-                  required
+               
                 />
               </div>
             </div>
@@ -142,7 +142,7 @@ function Singup() {
                   name="confirmPassword"
                   value={user.confirmPassword}
                   onChange={e => setUser({ ...user, confirmPassword: e.target.value })}
-                  required
+            
                 />
               </div>
             </div>
