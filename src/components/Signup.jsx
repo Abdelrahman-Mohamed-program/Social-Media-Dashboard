@@ -9,7 +9,7 @@ import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 
 function Singup() {
   const axios = useAxiosInstance();
-  const { setToken, setUserID, setRefreshToken } = useAuth();
+  const { setToken, setUserID, setRefreshToken, setUsername } = useAuth();
 
   const [user, setUser] = useState({
     username: "",
@@ -54,7 +54,8 @@ function Singup() {
       setToken(data.accessToken)
       setUserID(data.userID)
       setRefreshToken(data.refreshToken)
-    navigateToProfile('/')
+      setUsername(data.username)
+      navigateToLogin('/') // navigate to logs in if response is true
     }).catch(err => {
       withReactContent(Swal).fire({
         icon: "error",
