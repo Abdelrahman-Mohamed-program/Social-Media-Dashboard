@@ -131,7 +131,7 @@ function ProfilePage() {
                         <div className="card-body">
                             <h5 className="card-title">Logout</h5>
                             <button onClick={handleLogout} className="btn btn-danger">
-                                Logout
+                                Log out
                             </button>
                         </div>
                     </div>

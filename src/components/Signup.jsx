@@ -55,7 +55,7 @@ function Singup() {
       setUserID(data.userID)
       setRefreshToken(data.refreshToken)
       setUsername(data.username)
-      navigateToLogin('/') // navigate to logs in if response is true
+     navigateToProfile('/') // navigate to logs in if response is true
     }).catch(err => {
       withReactContent(Swal).fire({
         icon: "error",
