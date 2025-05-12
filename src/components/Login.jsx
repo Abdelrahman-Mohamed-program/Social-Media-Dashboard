@@ -40,7 +40,6 @@ function Login() {
         title: "Logged in succesfully!",
         text: `Welcome back ${data.username}`,
       });
-      console.log(data)
       setToken(data.accessToken)
       setUserID(data.userId)
       setRefreshToken(data.refreshToken)

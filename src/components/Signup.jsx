@@ -55,7 +55,6 @@ function Singup() {
       setUserID(data.userID)
       setRefreshToken(data.refreshToken)
       setUsername(data.username)
-     navigateToProfile('/')
     }).catch(err => {
       withReactContent(Swal).fire({
         icon: "error",
@@ -63,6 +62,7 @@ function Singup() {
         text: `${err}`,
       });
     });
+        navigateToProfile('/')
   }
 
   return (
