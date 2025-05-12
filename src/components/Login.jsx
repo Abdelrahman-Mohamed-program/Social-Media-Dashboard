@@ -74,7 +74,6 @@ function Login() {
                 placeholder="Enter your email"
                 value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
-                required
               />
             </div>
           </div>
@@ -92,7 +91,6 @@ function Login() {
                 placeholder="Enter your password"
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
-                required
               />
             </div>
           </div>
