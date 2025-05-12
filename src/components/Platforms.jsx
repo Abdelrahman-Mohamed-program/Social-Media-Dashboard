@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PlatformTable from "./tables/PlatformTable";
 import useAxiosInstance from "../config/api";
-
+import { motion } from "motion/react";
 const Platforms = () => {
     const axios = useAxiosInstance();
     const [platforms, setPlatforms] = useState([]);
@@ -31,7 +31,10 @@ const Platforms = () => {
     };
 
     return (
-        <div className="container-fluid">
+        <motion.div
+                          initial={{ opacity: 0, y: -20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6 }} className="container-fluid">
             <div className="row">
                 {/* Sidebar */}
                 <div className="col-4 col-lg-2">
@@ -43,7 +46,7 @@ const Platforms = () => {
                     <PlatformTable platforms={platforms} onDelete={handleDelete} setPlatforms={setPlatforms} />
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

@@ -68,7 +68,11 @@ function Singup() {
   return (
     <>
       <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="card p-4 shadow-lg" style={{ width: "350px" }}>
+        <motion.div
+                          initial={{ opacity: 0, y: -20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6 }}
+                           className="card p-4 shadow-lg" style={{ width: "350px" }}>
           <h2 className="text-center mb-4">Sign Up</h2>
 
           <form onSubmit={handleSubmit}>
@@ -163,7 +167,7 @@ function Singup() {
               </Link>
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </>
   );
