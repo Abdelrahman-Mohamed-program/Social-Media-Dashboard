@@ -8,13 +8,12 @@ function Contact() {
 
     const sendEmail = (e) => {
         e.preventDefault();
-
         emailjs
             .sendForm(
-                "service_o6yqe6e", // replace with your actual service ID
-                "template_hosi08q", // replace with your template ID
+                "service_o6yqe6e", 
+                "template_hosi08q", 
                 form.current,
-                "Bf3j8CvIdzmJeXXqa" // replace with your public key
+                "Bf3j8CvIdzmJeXXqa" 
             )
             .then(
                 (result) => {
