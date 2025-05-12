@@ -13,7 +13,7 @@ import { motion } from "motion/react";
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Dashboard = () => {
     const axios = useAxiosInstance();
-    const [username, setUsername] = useState('');
+  const {username}=useAuth();
   
    
     const [data, setData] = useState({
@@ -54,6 +54,7 @@ const Dashboard = () => {
             const response = await axios.get(`/analytics/p/${selectedPlatform.id}`);
             const data = await response.data;
             setData(data);
+            setUsername()
         } catch (error) {
             console.error('Error fetching analytics data:', error);
         }
@@ -169,7 +170,7 @@ const socialStats = [
             <div className="container-fluid ">
       <div className="row justify-content-center align-items-center">
                     {/* Sidebar */}
-                    {/* <div className="col-4 col-lg-2">
+                    <div className="col-4 col-lg-2">
                         <ul className="list-unstyled">
                             {platforms && platforms.length > 0 ? platforms.map(platform => (
                                 <li
@@ -186,17 +187,9 @@ const socialStats = [
                                     />
                                     {platform.name}
                                 </li>
-                            )) : (
-                                <div>
-                                    <button className="btn btn-primary" onClick={() => setShowAddPlatformModal(true)}>
-                                        Add Platform
-                                    </button>
-
-                                    {showAddPlatformModal && <AddPlatformModal title="Add" show={showAddPlatformModal} onClose={() => setShowAddPlatformModal(false)} onAdd={handleAddPlatform} />}
-                                </div>
-                            )}
+                            )):<></> }
                         </ul>
-                    </div> */}
+                    </div>
 
                     {/* Main Content */}
                     <div className="col-8 col-lg-10">
@@ -217,7 +210,7 @@ const socialStats = [
                             backdropFilter: "blur(5px)",
                            }}
                         >
-                             <h1 className="display-4 fw-bold dancing-font">Hello 👋</h1>
+                             <h1 className="display-4 fw-bold dancing-font">Hello {username} 👋</h1>
                              <p className="lead comic-relief-regular">Welcome to your social media dashboard</p>
                              <button className="btn btn-light mt-3 px-4 py-2 fw-semibold" onClick={scrollToStats}>
                                Let’s See Your Analysis
